@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  /* Couleurs El Humo */
+  --color-humo-cream: #F5F0E8;
+  --color-humo-kraft: #E8DCC8;
+  --color-humo-brown: #2C1A0E;
+  --color-humo-orange: #C2622D;
+  --color-humo-orange-dark: #A34E22;
+  --color-humo-olive: #5C6B3A;
+  --color-humo-warm: #8B5E3C;
+
+  /* Typographies */
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-inter);
+}
+
+body {
+  background-color: #F5F0E8;
+  color: #2C1A0E;
+  font-family: var(--font-inter), sans-serif;
+}
