@@ -4,11 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 
-const links = [
-  { label: 'Menu', href: '#menu' },
-  { label: 'Réservation', href: '#reservation' },
-]
-
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -29,17 +24,6 @@ export default function Navbar() {
           El <span className="text-humo-orange">Humo</span>
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-10">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a href={l.href} className="text-sm font-medium text-humo-brown/70 hover:text-humo-orange transition-colors tracking-wide uppercase">
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
         {/* CTA */}
         <div className="hidden md:block">
           <a
@@ -59,16 +43,6 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-humo-cream border-t border-humo-kraft px-6 py-6 flex flex-col gap-5">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-sm font-medium text-humo-brown uppercase tracking-wide"
-            >
-              {l.label}
-            </a>
-          ))}
           <a
             href="#reservation"
             onClick={() => setOpen(false)}
