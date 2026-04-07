@@ -1,11 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -24,34 +22,14 @@ export default function Navbar() {
           El <span className="text-humo-orange">Humo</span>
         </Link>
 
-        {/* CTA */}
-        <div className="hidden md:block">
-          <a
-            href="#reservation"
-            className="bg-humo-orange text-white text-sm font-medium px-6 py-3 rounded-full hover:bg-humo-orange-dark transition-colors"
-          >
-            Réserver une table
-          </a>
-        </div>
-
-        {/* Mobile burger */}
-        <button className="md:hidden p-2 text-humo-brown" onClick={() => setOpen(!open)}>
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        {/* CTA — visible sur desktop et mobile */}
+        <a
+          href="#reservation"
+          className="bg-humo-orange text-white text-xs font-medium px-4 py-1.5 md:px-4 md:py-2 md:text-sm rounded-full hover:bg-humo-orange-dark transition-colors"
+        >
+          Réserver une table
+        </a>
       </nav>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden bg-humo-cream border-t border-humo-kraft px-6 py-6 flex flex-col gap-5">
-          <a
-            href="#reservation"
-            onClick={() => setOpen(false)}
-            className="bg-humo-orange text-white text-sm font-medium px-6 py-3 rounded-full text-center hover:bg-humo-orange-dark transition-colors"
-          >
-            Réserver une table
-          </a>
-        </div>
-      )}
     </header>
   )
 }
