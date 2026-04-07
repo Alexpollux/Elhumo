@@ -37,7 +37,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-display font-bold text-5xl md:text-7xl text-white leading-tight mb-6"
+          className="font-display font-bold text-4xl md:text-7xl text-white leading-tight mb-6"
         >
           L'âme du Mexique,<br />
           <span className="text-humo-orange">au feu de bois</span>
@@ -60,13 +60,13 @@ export default function Hero() {
         >
           <a
             href="#menu"
-            className="bg-humo-orange text-white font-medium px-8 py-4 rounded-full hover:bg-humo-orange-dark transition-colors text-sm uppercase tracking-wide"
+            className="bg-humo-orange text-white font-medium px-5 py-2.5 md:px-8 md:py-4 rounded-full hover:bg-humo-orange-dark transition-colors text-xs md:text-sm uppercase tracking-wide"
           >
             Voir le menu
           </a>
           <a
             href="#reservation"
-            className="border-2 border-white text-white font-medium px-8 py-4 rounded-full hover:bg-white hover:text-humo-brown transition-colors text-sm uppercase tracking-wide"
+            className="border-2 border-white text-white font-medium px-5 py-2.5 md:px-8 md:py-4 rounded-full hover:bg-white hover:text-humo-brown transition-colors text-xs md:text-sm uppercase tracking-wide"
           >
             Réserver
           </a>
@@ -77,7 +77,7 @@ export default function Hero() {
       <motion.div
         animate={{ opacity: scrolled ? 0 : 1 }}
         transition={{ duration: 0.3 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 pointer-events-none"
       >
         <span className="text-white/50 text-xs uppercase tracking-widest">Découvrir</span>
         <motion.div
