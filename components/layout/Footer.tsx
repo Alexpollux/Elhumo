@@ -55,9 +55,14 @@ export default function Footer() {
           <p className="text-white/30 text-xs">
             © {new Date().getFullYear()} El Humo. Tous droits réservés.
           </p>
-          <p className="text-white/20 text-xs">
-            Site réalisé par <span className="text-white/40">Alex Pollux</span>
-          </p>
+          <a
+            href="https://meme-dev.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/20 text-xs hover:text-white/40 transition-colors"
+          >
+            Site réalisé par meme-dev.com
+          </a>
         </div>
       </div>
     </footer>
