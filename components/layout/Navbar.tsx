@@ -25,7 +25,7 @@ export default function Navbar() {
         {/* CTA — visible sur desktop et mobile */}
         <a
           href="#reservation"
-          className="bg-humo-orange text-white text-xs font-medium px-4 py-1.5 md:px-4 md:py-2 md:text-sm rounded-full hover:bg-humo-orange-dark transition-colors"
+          className="bg-humo-orange text-white text-xs font-medium px-4 py-1.5 md:px-5 md:py-2.5 md:text-sm rounded-full hover:bg-humo-orange-dark transition-colors"
         >
           Réserver une table
         </a>
