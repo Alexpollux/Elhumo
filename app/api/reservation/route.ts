@@ -4,6 +4,15 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -13,15 +22,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Champs manquants' }, { status: 400 })
     }
 
+    const guestsNum = parseInt(guests)
+    if (isNaN(guestsNum) || guestsNum < 1 || guestsNum > 20) {
+      return NextResponse.json({ error: 'Nombre de couverts invalide (1-20).' }, { status: 400 })
+    }
+
+    // Sanitisation anti-XSS pour le template email
+    const safeName    = escapeHtml(String(name).slice(0, 100))
+    const safeEmail   = escapeHtml(String(email).slice(0, 200))
+    const safeMessage = message ? escapeHtml(String(message).slice(0, 500)) : null
+
     // Sauvegarde en base
     const reservation = await prisma.reservation.create({
       data: {
-        name,
-        email,
-        phone: phone || null,
+        name: safeName,
+        email: safeEmail,
+        phone: phone ? String(phone).slice(0, 20) : null,
         date: new Date(`${date}T${time}:00`),
-        guests: parseInt(guests),
-        message: message || null,
+        guests: guestsNum,
+        message: safeMessage,
         status: 'PENDING',
       },
     })
@@ -29,7 +48,7 @@ export async function POST(request: NextRequest) {
     // Email de confirmation au client
     await resend.emails.send({
       from: 'El Humo <onboarding@resend.dev>',
-      to: email,
+      to: safeEmail,
       subject: '✅ Votre réservation chez El Humo',
       html: `
         <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; background: #F5F0E8; padding: 40px; border-radius: 16px;">
@@ -38,7 +57,7 @@ export async function POST(request: NextRequest) {
 
           <h2 style="color: #2C1A0E; font-size: 22px; margin-bottom: 16px;">Réservation confirmée 🎉</h2>
           <p style="color: #5C3D2A; font-size: 15px; line-height: 1.6;">
-            Bonjour <strong>${name}</strong>, nous avons bien reçu votre réservation. À très vite !
+            Bonjour <strong>${safeName}</strong>, nous avons bien reçu votre réservation. À très vite !
           </p>
 
           <div style="background: white; border-radius: 12px; padding: 24px; margin: 24px 0; border: 1px solid #E8DCC8;">
@@ -55,7 +74,7 @@ export async function POST(request: NextRequest) {
                 <td style="padding: 8px 0; color: #8B5E3C; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Couverts</td>
                 <td style="padding: 8px 0; color: #2C1A0E; font-weight: bold; text-align: right;">${guests} personne${parseInt(guests) > 1 ? 's' : ''}</td>
               </tr>
-              ${message ? `<tr style="border-top: 1px solid #E8DCC8;"><td style="padding: 8px 0; color: #8B5E3C; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Message</td><td style="padding: 8px 0; color: #2C1A0E; text-align: right;">${message}</td></tr>` : ''}
+              ${safeMessage ? `<tr style="border-top: 1px solid #E8DCC8;"><td style="padding: 8px 0; color: #8B5E3C; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Message</td><td style="padding: 8px 0; color: #2C1A0E; text-align: right;">${safeMessage}</td></tr>` : ''}
             </table>
           </div>
 
